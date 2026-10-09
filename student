@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Integer> marks = new ArrayList<>();
+
+        System.out.print("Enter the number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        if (n <= 0) {
+            System.out.println("Number of students must be positive.");
+            sc.close();
+            return;
+        }
+
+        // Input student details
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter student name: ");
+            String name = sc.nextLine();
+
+            int mark;
+            do {
+                System.out.print("Enter marks (0-100): ");
+                mark = sc.nextInt();
+                sc.nextLine();
+
+                if (mark < 0 || mark > 100) {
+                    System.out.println("Invalid marks! Enter between 0 and 100.");
+                }
+            } while (mark < 0 || mark > 100);
+
+            names.add(name);
+            marks.add(mark);
+        }
+
+        // Calculate average, highest, and lowest
+        int total = 0;
+        int highest = marks.get(0);
+        int lowest = marks.get(0);
+
+        for (int mark : marks) {
+            total += mark;
+
+            if (mark > highest) {
+                highest = mark;
+            }
+
+            if (mark < lowest) {
+                lowest = mark;
+            }
+        }
+
+        double average = (double) total / n;
+
+        // Display summary report
+        System.out.println("\n===== STUDENT GRADE REPORT =====");
+        System.out.printf("%-20s %s%n", "Student Name", "Marks");
+        System.out.println("--------------------------------");
+
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%-20s %d%n",
+                    names.get(i), marks.get(i));
+        }
+
+        System.out.println("--------------------------------");
+        System.out.printf("Average Marks: %.2f%n", average);
+        System.out.println("Highest Marks: " + highest);
+        System.out.println("Lowest Marks: " + lowest);
+
+        sc.close();
+    }
+}
